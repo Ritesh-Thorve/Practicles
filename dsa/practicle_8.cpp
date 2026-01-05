@@ -1,176 +1,113 @@
 // 8] Implement DFS to find paths in a city’s metro rail system represented as a graph using an adjacency list.
 
 #include <iostream>
-#include <string>
+#include <vector>
 using namespace std;
 
-// Base class
-class Person {
-protected:
-string name;
-int rollNo;
+// Depth First Search function
+void dfs(int station, vector<vector<int>>& adj, vector<bool>& visited) {
+    visited[station] = true;
+    cout << "Visited station: " << station << endl;
 
-public:
-void setPerson(string n, int r) {
-name = n;
-rollNo = r;
+    for (int neighbor : adj[station]) {
+        if (!visited[neighbor]) {
+            dfs(neighbor, adj, visited);
+        }
+    }
 }
 
-void displayPerson() {
-cout << "Name: " << name << ", Roll No: " << rollNo << endl;
-}
-};
-
-// Academic class – virtual inheritance
-class Academic : virtual public Person {
-protected:
-float marksMath;
-float marksScience;
-
-public:
-void setAcademic(float m, float s) {
-marksMath = m;
-marksScience = s;
-}
-
-void displayAcademic() {
-cout << "Academic Marks: Math = " << marksMath
-<< ", Science = " << marksScience << endl;
-}
-};
-
-// Extracurricular class – virtual inheritance
-class Extracurricular : virtual public Person {
-
-protected:
-int sportsScore;
-int artScore;
-
-public:
-void setExtracurricular(int sport, int art) {
-sportsScore = sport;
-artScore = art;
-}
-
-void displayExtracurricular() {
-cout << "Extracurricular Scores: Sports = " << sportsScore
-<< ", Art = " << artScore << endl;
-}
-};
-
-// Final derived class using hybrid inheritance
-class Result : public Academic, public Extracurricular {
-public:
-void displayResult() {
-displayPerson();
-displayAcademic();
-displayExtracurricular();
-
-float totalAcademic = marksMath + marksScience;
-int totalExtra = sportsScore + artScore;
-cout << "Total Academic = " << totalAcademic << ", Total Extracurricular = " <<
-totalExtra << endl;
-}
-};
-
-// Main function
 int main() {
-Result student;
+    int numStations = 6;   // Number of metro stations
 
-// Setting values
-student.setPerson("Amar", 101);
-student.setAcademic(85.5, 92.0);
-student.setExtracurricular(8, 9);
+    // Adjacency list representation of metro network
+    vector<vector<int>> metroAdj(numStations);
 
-// Displaying complete result
-cout << "\n--- Student Report ---\n";
-student.displayResult();
+    // Undirected connections between stations
+    metroAdj[0] = {1, 2};
+    metroAdj[1] = {0, 3};
+    metroAdj[2] = {0, 4};
+    metroAdj[3] = {1, 5};
+    metroAdj[4] = {2};
+    metroAdj[5] = {3};
 
-return 0;
+    vector<bool> visited(numStations, false);
+
+    cout << "Starting DFS from Station 0:\n";
+    dfs(0, metroAdj, visited);
+
+    return 0;
 }
 
 
 /*
-Theory:
-Theory Covered by the Program
+📘 Theory Covered by the Program
+1. Graph Representation
 
-This program demonstrates Object-Oriented Programming (OOP) concepts in C++, with special focus on inheritance types, especially virtual inheritance and hybrid inheritance.
+The metro rail system is represented as a graph.
 
-1. Object-Oriented Programming (OOP)
+Stations → vertices (nodes)
 
-The program is designed using classes and objects.
+Rail connections → edges
 
-Data and related functions are bundled together, improving modularity and reusability.
+Uses an adjacency list to store connections efficiently.
 
-2. Base Class
+2. Adjacency List
 
-Person is the base (parent) class.
+A graph representation where each vertex stores a list of its neighboring vertices.
 
-It stores common attributes such as name and roll number.
+Efficient for sparse graphs like metro systems.
 
-These attributes are shared by all derived classes.
+Implemented using vector<vector<int>>.
 
-3. Inheritance
+3. Depth First Search (DFS)
 
-Inheritance allows one class to acquire properties of another class.
+DFS is a graph traversal algorithm.
 
-a) Single Inheritance
+Explores as far as possible along one path before backtracking.
 
-Academic and Extracurricular both inherit from Person.
+Implemented using recursion.
 
-b) Virtual Inheritance
+4. Recursive Traversal
 
-Both Academic and Extracurricular inherit Person virtually.
+DFS calls itself for unvisited neighboring stations.
 
-This avoids duplication of Person data members when inherited by the final class.
+Uses the call stack implicitly.
 
-Solves the Diamond Problem in multiple inheritance.
+Suitable for exploring paths in a network.
 
-4. Diamond Problem
+5. Visited Array
 
-Occurs when two classes inherit from the same base class and a derived class inherits from both.
+A boolean array tracks visited stations.
 
-Without virtual inheritance, multiple copies of base class members would exist.
+Prevents infinite loops in cyclic graphs.
 
-Virtual inheritance ensures only one shared copy of the base class.
+Ensures each station is visited only once.
 
-5. Multiple Inheritance
+6. Undirected Graph
 
-Result class inherits from both Academic and Extracurricular.
+Metro connections are bidirectional.
 
-Combines academic and extracurricular performance into one final result.
+Each connection is stored in both stations’ adjacency lists.
 
-6. Hybrid Inheritance
+7. Real-World Application
 
-The program uses hybrid inheritance, which is a combination of:
+DFS can be used to:
 
-Single inheritance
+Explore reachable stations
 
-Multiple inheritance
+Find paths in metro networks
 
-Virtual inheritance
+Analyze connectivity in transportation systems
 
-Result is derived from multiple classes that themselves inherit from a common base.
+8. Algorithm Complexity
 
-7. Encapsulation
+Time Complexity: O(V + E)
 
-Data members are declared as protected, allowing controlled access to derived classes.
+Space Complexity: O(V)
 
-Access to data is managed through member functions.
+where:
 
-8. Method Reuse
+V = number of stations
 
-Functions like displayPerson(), displayAcademic(), and displayExtracurricular() are reused in the Result class.
-
-Promotes code reusability and maintainability.
-
-9. Data Aggregation and Processing
-
-The program calculates:
-
-Total academic marks
-
-Total extracurricular scores
-
-Demonstrates combining data from multiple inheritance paths.
+E = number of connections
 */
