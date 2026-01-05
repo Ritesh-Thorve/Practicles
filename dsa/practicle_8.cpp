@@ -1,3 +1,5 @@
+// 8] Implement DFS to find paths in a city’s metro rail system represented as a graph using an adjacency list.
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -86,3 +88,89 @@ student.displayResult();
 
 return 0;
 }
+
+
+/*
+Theory:
+Theory Covered by the Program
+
+This program demonstrates Object-Oriented Programming (OOP) concepts in C++, with special focus on inheritance types, especially virtual inheritance and hybrid inheritance.
+
+1. Object-Oriented Programming (OOP)
+
+The program is designed using classes and objects.
+
+Data and related functions are bundled together, improving modularity and reusability.
+
+2. Base Class
+
+Person is the base (parent) class.
+
+It stores common attributes such as name and roll number.
+
+These attributes are shared by all derived classes.
+
+3. Inheritance
+
+Inheritance allows one class to acquire properties of another class.
+
+a) Single Inheritance
+
+Academic and Extracurricular both inherit from Person.
+
+b) Virtual Inheritance
+
+Both Academic and Extracurricular inherit Person virtually.
+
+This avoids duplication of Person data members when inherited by the final class.
+
+Solves the Diamond Problem in multiple inheritance.
+
+4. Diamond Problem
+
+Occurs when two classes inherit from the same base class and a derived class inherits from both.
+
+Without virtual inheritance, multiple copies of base class members would exist.
+
+Virtual inheritance ensures only one shared copy of the base class.
+
+5. Multiple Inheritance
+
+Result class inherits from both Academic and Extracurricular.
+
+Combines academic and extracurricular performance into one final result.
+
+6. Hybrid Inheritance
+
+The program uses hybrid inheritance, which is a combination of:
+
+Single inheritance
+
+Multiple inheritance
+
+Virtual inheritance
+
+Result is derived from multiple classes that themselves inherit from a common base.
+
+7. Encapsulation
+
+Data members are declared as protected, allowing controlled access to derived classes.
+
+Access to data is managed through member functions.
+
+8. Method Reuse
+
+Functions like displayPerson(), displayAcademic(), and displayExtracurricular() are reused in the Result class.
+
+Promotes code reusability and maintainability.
+
+9. Data Aggregation and Processing
+
+The program calculates:
+
+Total academic marks
+
+Total extracurricular scores
+
+Demonstrates combining data from multiple inheritance paths.
+*/
