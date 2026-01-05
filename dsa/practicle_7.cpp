@@ -4,104 +4,170 @@
 #include <vector>
 #include <queue>
 using namespace std;
+
 struct Employee {
-string name;
-vector<Employee*> subordinates;
-Employee(string n) : name(n) {}
+    string name;
+    vector<Employee*> subordinates;
+
+    Employee(string n) : name(n) {}
 };
+
 // Pre-order traversal: Print manager before subordinates
-void preorder(Employee* root, int level=0) {
-if (!root) return;
-for(int i=0; i<level; i++) cout << " "; // indentation by level
-cout << root->name << endl;
-for (auto sub : root->subordinates) {
-preorder(sub, level + 1);
+void preorder(Employee* root, int level = 0) {
+    if (!root) return;
+
+    for (int i = 0; i < level; i++)
+        cout << "  ";   // indentation
+
+    cout << root->name << endl;
+
+    for (auto sub : root->subordinates) {
+        preorder(sub, level + 1);
+    }
 }
-}
+
 // Level-order traversal: Print employees level-wise
 void levelOrder(Employee* root) {
-if (!root) return;
-queue<Employee*> q;
-q.push(root);
-while (!q.empty()) {
-int n = q.size();
-for (int i=0; i<n; i++) {
+    if (!root) return;
 
-Employee* curr = q.front();
-q.pop();
-cout << curr->name << " ";
-for (auto sub : curr->subordinates)
-q.push(sub);
+    queue<Employee*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+        int n = q.size();
+        for (int i = 0; i < n; i++) {
+            Employee* curr = q.front();
+            q.pop();
+
+            cout << curr->name << " ";
+
+            for (auto sub : curr->subordinates)
+                q.push(sub);
+        }
+        cout << endl;
+    }
 }
-cout << endl;
+
+// Function to free memory (post-order deletion)
+void deleteTree(Employee* root) {
+    if (!root) return;
+
+    for (auto sub : root->subordinates)
+        deleteTree(sub);
+
+    delete root;
 }
+
+int main() {
+    // Create company hierarchy
+    Employee* CEO = new Employee("CEO");
+    Employee* mgr1 = new Employee("Manager1");
+    Employee* mgr2 = new Employee("Manager2");
+    Employee* emp1 = new Employee("Employee1");
+    Employee* emp2 = new Employee("Employee2");
+    Employee* emp3 = new Employee("Employee3");
+
+    CEO->subordinates.push_back(mgr1);
+    CEO->subordinates.push_back(mgr2);
+    mgr1->subordinates.push_back(emp1);
+    mgr1->subordinates.push_back(emp2);
+    mgr2->subordinates.push_back(emp3);
+
+    cout << "Pre-order Traversal (Hierarchy display):" << endl;
+    preorder(CEO);
+
+    cout << "\nLevel-order Traversal (Layer-wise display):" << endl;
+    levelOrder(CEO);
+
+    // Proper memory cleanup
+    deleteTree(CEO);
+
+    return 0;
 }
+
 
 /*
-Theory:
-Explanation of the Program
+Theory Covered by the Program (Employee Hierarchy Using Tree Traversals)
 
-This program represents an organizational hierarchy using a tree data structure and demonstrates two important tree traversal techniques: pre-order traversal and level-order traversal.
+This program demonstrates how a tree data structure can be used to represent an organizational hierarchy and how different tree traversal techniques are applied to process hierarchical data.
 
-1. Tree Data Structure (Hierarchical Representation)
+1. Tree Data Structure
 
-Each employee is represented as a node in a tree.
+A tree is a non-linear data structure used to represent hierarchical relationships.
 
-The Employee structure contains:
+In this program, each Employee acts as a node.
 
-name: employee’s name (data)
+The topmost employee (CEO) is the root node.
 
-subordinates: a dynamic list (vector) of pointers to child nodes
+Managers and employees are represented as child nodes.
 
-This forms a general tree, where a node can have multiple children (subordinates).
+Since an employee can have multiple subordinates, the structure is a general tree.
 
-2. Use of Dynamic Data Structures
+2. Node Representation
 
-vector<Employee*> is used to store subordinates.
+Each node stores:
 
-Allows a manager to have any number of subordinates dynamically.
+Employee name (data)
 
-Demonstrates flexible, non-fixed-size hierarchical storage.
+A list of subordinates (children)
 
-3. Pre-order Tree Traversal
+A dynamic list (vector) is used to store child nodes, allowing flexibility in the number of subordinates.
 
-Order: Root → Children
+3. Pre-order Traversal
 
-The manager (root) is printed before all subordinates.
+Traversal order: Root → Children
 
-Uses recursion to traverse the hierarchy.
+The manager is processed before subordinates.
 
-Indentation based on level visually represents the reporting structure.
+Uses recursion to visit all nodes.
 
-Application:
-Displaying organizational charts where higher authorities appear first.
+Indentation based on depth visually shows hierarchy.
 
-4. Level-order Tree Traversal (Breadth-First Traversal)
+Use case:
+Displaying an organization chart where senior employees appear before juniors.
 
-Traverses the tree level by level from top to bottom.
+4. Level-order Traversal (Breadth-First Traversal)
 
-Uses a queue to manage nodes at each level.
+Traverses the tree level by level.
 
-Prints all employees at the same hierarchy level on one line.
+Uses a queue to manage nodes.
 
-Application:
-Viewing organization structure department-wise or level-wise.
+All employees at the same level are displayed together.
 
-5. Use of Queue
+Use case:
+Viewing employees department-wise or level-wise.
 
-Queue follows FIFO (First In First Out) principle.
+5. Use of Recursion
 
-Essential for level-order traversal to process nodes in correct order.
+Pre-order traversal is implemented recursively.
 
-6. Recursion
+Each function call processes a node and then its subtrees.
 
-Pre-order traversal uses recursion to explore each subtree.
+6. Use of Queue (FIFO Principle)
 
-Simplifies tree traversal logic.
+Level-order traversal relies on the queue data structure.
 
-7. Indentation and Levels
+Queue follows First In First Out (FIFO) principle.
 
-The level parameter helps format output.
+Ensures correct processing order for breadth-first traversal.
 
-Shows depth of each employee in the hierarchy.
+7. Dynamic Memory Allocation
+
+Employee nodes are created using new.
+
+Memory is freed using post-order deletion.
+
+Demonstrates safe handling of dynamically allocated memory.
+
+8. Hierarchical Data Modeling
+
+The program models real-world hierarchical systems such as:
+
+Company organization
+
+Management structure
+
+Reporting relationships
+
+Conclusion
 */
