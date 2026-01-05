@@ -1,3 +1,6 @@
+//Name: Create An array to store student names  in class, allowing: insertions, deletions and traversal
+
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -102,3 +105,100 @@ int main() {
 
     return 0;
 }
+
+
+
+Theory:
+Theory Explanation of Student List Program (C++)
+1. Purpose of the Program
+This program implements a Student List Management System using Object-Oriented Programming (OOP) concepts in C++.
+It allows the user to:
+•	Insert student names
+•	Delete student names
+•	Display the list of students
+using a menu-driven approach.
+________________________________________
+2. Header Files Used
+#include <iostream>
+#include <string>
+•	<iostream>: Used for input and output operations (cin, cout).
+•	<string>: Used to handle string data type for student names.
+________________________________________
+3. Class Definition: StudentList
+The program uses a class to represent the student list, following encapsulation.
+Private Data Members
+string students[100];
+int count;
+•	students[100]: Array to store up to 100 student names.
+•	count: Keeps track of the current number of students.
+Private access ensures data security.
+________________________________________
+4. Constructor
+StudentList() {
+    count = 0;
+}
+•	Initializes the student count to zero.
+•	Automatically called when an object of the class is created.
+•	Ensures the list starts empty.
+________________________________________
+5. Member Functions
+a) Insert Student
+void insertStudent(string name)
+•	Checks if the list is not full.
+•	Adds the student name at the next available index.
+•	Increments the count.
+•	Displays a success message.
+Concept Used:
+Array insertion, condition checking.
+________________________________________
+b) Delete Student
+void deleteStudent(string name)
+•	Searches for the student name in the array.
+•	If found, shifts remaining elements left to fill the gap.
+•	Decreases the count.
+•	If not found, displays an error message.
+Concept Used:
+Linear search and array deletion.
+________________________________________
+c) Display Students
+void displayStudents()
+•	Checks if the list is empty.
+•	Displays all student names with serial numbers.
+Concept Used:
+Looping and formatted output.
+________________________________________
+6. Main Function
+int main()
+•	Creates an object myClass of StudentList.
+•	Uses a do-while loop to display a menu repeatedly.
+•	Uses switch-case for menu selection.
+•	Takes user input and calls appropriate class functions.
+________________________________________
+7. Menu-Driven Approach
+The program provides four options:
+1.	Insert student name
+2.	Delete student name
+3.	Display all students
+4.	Exit program
+This approach improves user interaction and control flow.
+________________________________________
+8. Key Concepts Demonstrated
+•	Object-Oriented Programming (Class & Object)
+•	Encapsulation
+•	Arrays
+•	Strings
+•	Looping (for, do-while)
+•	Conditional statements
+•	Menu-driven programming
+________________________________________
+
+9. Advantages of the Program
+•	Simple and easy to understand
+•	Organized using OOP principles
+•	Prevents data overflow using size checks
+•	Suitable for small-scale student management
+________________________________________
+10. Limitation
+•	Fixed array size (maximum 100 students)
+•	No data persistence (data lost when program ends)
+
